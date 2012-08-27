@@ -1,11 +1,12 @@
-﻿using ImageProcessing.Core;
+﻿using System.IO;
+using ImageProcessing.Core;
 
 namespace Tester
 {
     internal class Program
     {
         private static void Main(string[] args) {
-            var image = Image.FromFile<RGBPixel>(@"C:\Users\Rich\Pictures\From Rich's Phone\Camera roll\WP_000003.jpg");
+            var image = Image.FromFile<RGBPixel>(@"Penguins.jpg");
 
             var grey = image.Filter(new GreyscaleFilter());
             var red = image.Filter(new RedFilter());
@@ -14,13 +15,14 @@ namespace Tester
             var sobelHorizontal = grey.Filter(new SobelHorizontal());
             var sobelVertical = grey.Filter(new SobelVertical());
 
-            Image.ToPng(image, "orig.png");
-            Image.ToPng(grey, "grey.png");
-            Image.ToPng(red, "red.png");
-            Image.ToPng(green, "green.png");
-            Image.ToPng(blue, "blue.png");
-            Image.ToPng(sobelHorizontal, "sobelH.png");
-            Image.ToPng(sobelVertical, "sobelV.png");
+            Directory.CreateDirectory("output");
+
+            Image.ToPng(grey, @"output\grey.png");
+            Image.ToPng(red, @"output\red.png");
+            Image.ToPng(green, @"output\green.png");
+            Image.ToPng(blue, @"output\blue.png");
+            Image.ToPng(sobelHorizontal, @"output\sobelH.png");
+            Image.ToPng(sobelVertical, @"output\sobelV.png");
         }
     }
 

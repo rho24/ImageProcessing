@@ -29,7 +29,7 @@ namespace TestBed.ViewModels
 
             var result = openFileDialog.ShowDialog();
 
-            if (result == true) Image = ImgProc.ImageFromFile(openFileDialog.FileName).ToImageSource();
+            if (result == true) Image = ImgProc.ImageFromFile(openFileDialog.FileName).Filter(new DelayingFilter(2)).ToImageSource();
         }
     }
 }

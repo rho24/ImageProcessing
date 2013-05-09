@@ -41,9 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions.cs" />
+    <Compile Include="ArgbPixel.cs" />
+    <Compile Include="BitmapStream.cs" />
+    <Compile Include="DelayingFilter.cs" />
+    <Compile Include="IFilter.cs" />
+    <Compile Include="FrameExtensions.cs" />
+    <Compile Include="IFrame.cs" />
     <Compile Include="ImgProc.cs" />
+    <Compile Include="PixelFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RememberingEnumerable.cs" />
+    <Compile Include="StaticFileImage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

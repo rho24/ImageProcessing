@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace ImageProcessing.Core
 {
-    public static class Extensions
-    {
-        public static Stream ToBitmapStream(this IFrame<ArgbPixel> frame) {
-            return new BitmapStream(frame);
-        }
-    }
-
     public class BitmapStream : Stream
     {
         private readonly RememberingEnumerable<byte> _bitmapBytes;
@@ -43,10 +35,10 @@ namespace ImageProcessing.Core
 
         public BitmapStream(IFrame<ArgbPixel> frame) {
             _frame = frame;
-            _bitmapBytes = new RememberingEnumerable<byte>(ToBytes(_frame));
+            _bitmapBytes = new RememberingEnumerable<byte>(ToBytes());
         }
 
-        private IEnumerable<byte> ToBytes(IFrame<ArgbPixel> frame) {
+        private IEnumerable<byte> ToBytes() {
             //https://en.wikipedia.org/wiki/BMP_file_format#Example_2
 
             //MP Header
@@ -235,63 +227,5 @@ namespace ImageProcessing.Core
         public override void Write(byte[] buffer, int offset, int count) {
             throw new NotImplementedException();
         }
-    }
-
-    public class RememberingEnumerable<T> : IEnumerable<T>
-    {
-        private readonly RememberingEnumerator _enumerator;
-
-        public RememberingEnumerable(IEnumerable<T> sequence) {
-            _enumerator = new RememberingEnumerator(sequence.GetEnumerator());
-        }
-
-        public IEnumerator<T> GetEnumerator() {
-            return _enumerator;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator() {
-            return GetEnumerator();
-        }
-
-        public void FinallyDispose() {
-            _enumerator.FinallyDispose();
-        }
-
-        #region Nested type: RememberingEnumerator
-
-        public class RememberingEnumerator : IEnumerator<T>
-        {
-            private readonly IEnumerator<T> _enumerator;
-
-            public RememberingEnumerator(IEnumerator<T> enumerator) {
-                _enumerator = enumerator;
-            }
-
-            public void Dispose() {
-
-            }
-
-            public bool MoveNext() {
-                return _enumerator.MoveNext();
-            }
-
-            public void Reset() {
-                throw new NotImplementedException();
-            }
-
-            public T Current {
-                get { return _enumerator.Current; }
-            }
-
-            object IEnumerator.Current {
-                get { return Current; }
-            }
-
-            public void FinallyDispose() {
-                _enumerator.Dispose();
-            }
-        }
-
-        #endregion
     }
 }

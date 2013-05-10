@@ -61,9 +61,14 @@ namespace TestBed.ViewModels
             var vertical = _grey
                 .Filter(new ConvolutingFilter(new[] {new[] {-1, -2, -1}, new[] {0, 0, 0}, new[] {1, 2, 1}}));
 
-            var average = horizontal.Zip(vertical, (h, v) => (Math.Abs(h) + Math.Abs(v))/2);
+            var edgeVectors = horizontal.Zip(vertical, (h, v) => new Vector2(h, v));
 
-            ShowFrame(average);
+            var next = edgeVectors.Filter(new NonMaximumSuppressionFilter())
+                                  .Select(p => p.Length)
+                                  .Filter(new HysteresisThresholdingFilter(10, 30))
+                                  .Select(p => p ? 1 : 0);
+
+            ShowFrame(next);
         }
     }
 }

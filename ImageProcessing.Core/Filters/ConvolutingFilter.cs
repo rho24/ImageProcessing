@@ -39,7 +39,7 @@ namespace ImageProcessing.Core.Filters
 
         private IEnumerable<IEnumerable<IPixel<int>>> ConvolutePixels(IEnumerable<IEnumerable<IPixel<int>>> data, Func<IFrame<int>> resultFrame) {
             var frameData = new Lazy<IIndexedSequence<IIndexedSequence<IPixel<int>>>>(() => data.ToIndexedSequence());
-            return data.Select(r => r.Select(p => Convolute(p, frameData.Value, resultFrame)));
+            return data.Select(r => r.Select(p => Convolute(p, frameData.Value, resultFrame)).Cache()).Cache();
         }
 
         private IPixel<int> Convolute(IPixel<int> pixel, IIndexedSequence<IIndexedSequence<IPixel<int>>> frameData, Func<IFrame<int>> resultFrame) {

@@ -39,10 +39,10 @@ namespace ImageProcessing.Core
             }
             bitmap.UnlockBits(bmData);
 
-            Data = rows.ToIndexedSequence();
+            Data = rows;
         }
 
-        public IIndexedSequence<IIndexedSequence<IPixel<Argb>>> Data { get; private set; }
+        public IEnumerable<IEnumerable<IPixel<Argb>>> Data { get; private set; }
         public int Height { get; private set; }
         public int Width { get; private set; }
     }

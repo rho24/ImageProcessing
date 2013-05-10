@@ -46,7 +46,9 @@
     <Compile Include="Filters\ArgbFilter.cs" />
     <Compile Include="Filters\ConvolutingFilter.cs" />
     <Compile Include="Filters\GreyscaleFilter.cs" />
+    <Compile Include="Filters\RangeFilter.cs" />
     <Compile Include="Filters\SelectFilter.cs" />
+    <Compile Include="Frame.cs" />
     <Compile Include="FrameZipper.cs" />
     <Compile Include="IFilter.cs" />
     <Compile Include="FrameExtensions.cs" />

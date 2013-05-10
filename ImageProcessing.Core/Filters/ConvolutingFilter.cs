@@ -37,16 +37,17 @@ namespace ImageProcessing.Core.Filters
             return resultFrame[0];
         }
 
-        private IIndexedSequence<IIndexedSequence<IPixel<int>>> ConvolutePixels(IIndexedSequence<IIndexedSequence<IPixel<int>>> data, Func<IFrame<int>> resultFrame) {
-            return data.Select(r => r.Select(p => Convolute(p, resultFrame)).ToIndexedSequence()).ToIndexedSequence();
+        private IEnumerable<IEnumerable<IPixel<int>>> ConvolutePixels(IEnumerable<IEnumerable<IPixel<int>>> data, Func<IFrame<int>> resultFrame) {
+            var frameData = new Lazy<IIndexedSequence<IIndexedSequence<IPixel<int>>>>(() => data.ToIndexedSequence());
+            return data.Select(r => r.Select(p => Convolute(p, frameData.Value, resultFrame)));
         }
 
-        private IPixel<int> Convolute(IPixel<int> pixel, Func<IFrame<int>> resultFrame) {
+        private IPixel<int> Convolute(IPixel<int> pixel, IIndexedSequence<IIndexedSequence<IPixel<int>>> frameData, Func<IFrame<int>> resultFrame) {
             int value = 0;
             
             if (!(pixel.Y <= _halfHeight || pixel.Y >= (pixel.Frame.Height - _halfHeight) || pixel.X <= _halfWidth || pixel.X >= (pixel.Frame.Width - _halfWidth))) {
                 for (var y = 0; y < _height; y++)
-                    for (int x = 0; x < _width; x++) value += pixel.Frame.Data[pixel.Y + y - _halfHeight][pixel.X + x - _halfWidth].Value*Template[y][x];
+                    for (int x = 0; x < _width; x++) value += frameData[pixel.Y + y - _halfHeight][pixel.X + x - _halfWidth].Value*Template[y][x];
             }
 
             return Pixel.Create(value, pixel.X, pixel.Y, resultFrame);

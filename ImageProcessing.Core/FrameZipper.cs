@@ -18,7 +18,7 @@ namespace ImageProcessing.Core
                                              frame1.Data.Zip(frame2.Data,
                                                              (r1, r2) => r1.Zip(r2,
                                                                                 (p1, p2) => Pixel.Create(_projection(p1.Value, p2.Value), p1.X, p1.Y, () => resultFrame[0])))
-                                                   .ToIndexedSequence());
+                );
 
             return resultFrame[0];
         }

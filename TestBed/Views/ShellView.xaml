@@ -4,13 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             Title="ImageProcessingTestBed" Height="500" Width="800">
+             Title="ImageProcessingTestBed" Height="750" Width="1000">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Name="OpenFile" Header="Open file"/>
             </MenuItem>
+            <MenuItem Name="QuickOpen" Header="Quick Open" />
+            <MenuItem Name="QuickEdges" Header="Quick Edges" />
         </Menu>
-        <Image Name="Image" />
+        <Image Name="Image" Stretch="None" />
     </DockPanel>
 </Window>

@@ -2,7 +2,7 @@
 {
     public static class ImgProc
     {
-        public static IFrame<ArgbPixel> ImageFromFile(string fileName) {
+        public static IFrame<Argb> ImageFromFile(string fileName) {
             return new StaticFileImage(fileName);
         }
     }

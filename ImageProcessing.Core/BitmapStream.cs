@@ -8,7 +8,7 @@ namespace ImageProcessing.Core
     public class BitmapStream : Stream
     {
         private readonly RememberingEnumerable<byte> _bitmapBytes;
-        private readonly IFrame<ArgbPixel> _frame;
+        private readonly IFrame<Argb> _frame;
         private int? _currentCount;
         private long _position = 0;
 
@@ -33,7 +33,7 @@ namespace ImageProcessing.Core
             set { throw new NotImplementedException(); }
         }
 
-        public BitmapStream(IFrame<ArgbPixel> frame) {
+        public BitmapStream(IFrame<Argb> frame) {
             _frame = frame;
             _bitmapBytes = new RememberingEnumerable<byte>(ToBytes());
         }
@@ -185,10 +185,10 @@ namespace ImageProcessing.Core
 
             foreach (var row in _frame.Data.Reverse()) {
                 foreach (var pixel in row) {
-                    yield return pixel.B;
-                    yield return pixel.G;
-                    yield return pixel.R;
-                    yield return pixel.A;
+                    yield return pixel.Value.B;
+                    yield return pixel.Value.G;
+                    yield return pixel.Value.R;
+                    yield return pixel.Value.A;
                 }
             }
         }
